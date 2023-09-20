@@ -218,32 +218,32 @@ console.log(getTitleAndBody(posts, 2))
 
 function getAll(array) {
   let newArray = []
-  array.map(n => newArray.push(n))
+  array.forEach(n => newArray.push(n))
   return newArray
 }
 console.log(getAll(posts))
 function getAllTitle(array) {
   let newArray = []
-  array.map(n => newArray.push(n.title))
+  array.forEach(n => newArray.push(n.title))
   return newArray
 }
 console.log(getAllTitle(posts))
 function getAllBody(array) {
   let newArray = []
-  array.map(n => newArray.push(n.body))
+  array.forEach(n => newArray.push(n.body))
   return newArray
 }
 console.log(getAllBody(posts))
 function getAllTitleAndBody(array) {
   let newArray = []
-  array.map(n => newArray.push(`Title: "${n.title}". Content: "${n.body}".`))
+  array.forEach(n => newArray.push(`Title: "${n.title}". Content: "${n.body}".`))
   return newArray
 }
 console.log(getAllTitleAndBody(posts))
 
 function getSliceTitleAndBody(array, start, count) {
   let newArray = []
-  array.slice(start, count).map(n => newArray.push(`Title: "${n.title}". Content: "${n.body}".`))
+  array.slice(start, count).forEach(n => newArray.push(`Title: "${n.title}". Content: "${n.body}".`))
   return newArray
 }
 console.log(getSliceTitleAndBody(posts, 4))
@@ -264,10 +264,18 @@ let container = document.querySelector('div')
 
 function create(HTMLelement = 'div', parent, classes, id) {
   let element = document.createElement(HTMLelement)
-  if (parent) { parent.append(element) }
-  else { document.body.append(element) }
-  if (classes) { element.className = classes }
-  if (id) { element.id = id }
+  if (parent) {
+    parent.append(element)
+  }
+  else {
+    document.body.append(element)
+  }
+  if (classes) {
+    element.className = classes
+  }
+  if (id) {
+    element.id = id
+  }
   return element
 }
 
