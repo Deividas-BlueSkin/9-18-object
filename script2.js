@@ -87,7 +87,7 @@ function addArea(name, population, continent, country, isCapital, touristAttract
             country: country, //string
         },
         isCapital: isCapital, //bool
-        touristAttractions: touristAttractions, //array
+        touristAttractions: [touristAttractions], //array
 
         toConsole: function () {
             console.log(this.name)
