@@ -1,12 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+
+    <!-- <form action="">
+        <legend>
+
+            <input type="radio">
+        </legend>
+    </form> -->
+
+
     
-    <script src="./script2.js"></script>
+    <form id="contact_form">
+
+        <div class="form_control">
+            <label for="contact_name">Name:</label>
+            <input type="text" name="name" id="contact_name" placeholder="Enter your name...">
+        </div>
+        <div class="form_control">
+            <label for="contact_surname">Surname:</label>
+            <input type="text" name="surname" id="contact_surname" placeholder="Enter your surname...">
+        </div>
+        <div class="form_control">
+            <label for="contact_age">Age:</label>
+            <input type="number" name="age" id="contact_age" placeholder="Enter your age...">
+        </div>
+        <div class="form_control">
+            <label for="contact_phone">Phone:</label>
+            <input type="text" name="phone" id="contact_phone" placeholder="Enter your phone...">
+        </div>
+        <div class="form_control">
+            <label for="contact_email">Email:</label>
+            <input type="text" name="email" id="contact_email" placeholder="Enter your email...">
+        </div>
+        <div class="form_control">
+            <label for="contact_skill">Skill:</label>
+            <input type="range" min="1" max="10" name="skill" id="contact_skill">
+            <output name="output" for="contact_skill"></output>
+        </div>
+
+
+        <fieldset>
+            <legend>Choose a group</legend>
+
+            <div class="form_control">
+                <input type="radio" name="group" id="radio_1" value="choose">
+                <label for="radio_1">Group_1</label>
+            </div>
+            <div class="form_control">
+                <input type="radio" name="group" id="radio_2" value="choose">
+                <label for="radio_2">Group_2</label>
+            </div>
+            <div class="form_control">
+                <input type="radio" name="group" id="radio_3" value="choose">
+                <label for="radio_3">Group_3</label>
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Check proficiency with language</legend>
+
+            <div class="form_control">
+                <input type="checkbox" name="language" id="language_1" value="JS">
+                <label for="language_1">Js</label>
+            </div>
+            <div class="form_control">
+                <input type="checkbox" name="language" id="language_2" value="JS">
+                <label for="language_2">C#</label>
+            </div>
+            <div class="form_control">
+                <input type="checkbox" name="language" id="language_3" value="JS">
+                <label for="language_3">Ph</label>
+            </div>
+            <div class="form_control">
+                <input type="checkbox" name="language" id="language_4" value="JS">
+                <label for="language_4">PikaPika</label>
+            </div>
+        </fieldset>
+
+
+        <!-- <button type="submit">Submit</button> -->
+        <input type="submit" value="submit" id="submit_button">
+    </form>
+
+    <script src="./script3.js"></script>
 </body>
+
 </html>
