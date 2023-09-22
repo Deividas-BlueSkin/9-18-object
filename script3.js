@@ -24,12 +24,12 @@ function init() {
     let form = document.querySelector('#contact_form')
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        let data = getData()
+        let data = getData(form)
 
         let item = create('div', true, listParent, 'student_item')
         let text = create('div', true, item, 'student_item')
         text.textContent = data.printHidden
-        
+
         createTemp(listParent, `Student created: ${data.name}`, `color: green`)
 
         // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-
@@ -56,9 +56,9 @@ function init() {
         // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<
         let deleteButton = create('button', false, item, null, 'show_button')
         deleteButton.textContent = 'delete'
-        deleteButton.addEventListener('click',function(){
+        deleteButton.addEventListener('click', function () {
             item.remove()
-            createTemp(listParent,`Student deleted: ${data.name} ${data.surname} . `,`color: red`)
+            createTemp(listParent, `Student deleted: ${data.name} ${data.surname} . `, `color: red`)
         })
     })
 
@@ -85,28 +85,33 @@ function update() {
     })
 }
 
-function getData() {
-    let name = document.querySelector('#contact_name').value
-    let surname = document.querySelector('#contact_surname').value
-    let age = document.querySelector('#contact_age').value
-    let phone = document.querySelector('#contact_phone').value
-    let email = document.querySelector('#contact_email').value
-    let skill = document.querySelector('#contact_skill').value
+function getData(form) {
+    let name = form.name.value
+    let surname = form.surname.value
+    let age = form.age.value
+    let phone = form.phone.value
+    let email = form.email.value
+    let skill = form.skill.value
     //---
-    let group = 'none'
-    for (let i = 1; i <= 3; i++) {
-        if (document.querySelector(`#radio_${i}`).checked) {
-            group = document.querySelector(`#radio_${i}`).value
-        }
-    }
+    let group = form.group.value
+    // let count_radio = form.querySelectorAll('fieldset div [type="radio"]').length
+    // console.log(count_radio)
+    // for (let i = 1; i <= count_radio; i++) {
+    //     if (document.querySelector(`#radio_${i}`).checked) {
+    //         group = document.querySelector(`#radio_${i}`).value
+    //     }
+    // }
     //---
     let language = []
-    for (let i = 1; i <= 4; i++) {
+    let count_checkbox = form.querySelectorAll('fieldset div [type="checkbox"]').length
+    console.log(count_checkbox)
+    for (let i = 1; i <= count_checkbox; i++) {
         if (document.querySelector(`#language_${i}`).checked) {
-            language.push(' ' + document.querySelector(`#language_${i}`).value)
+            language.push(document.querySelector(`#language_${i}`).value)
         }
     }
     if (language.length == 0) language = 'none'
+    else language = language.join(', ')//temporary solution until needed for more subtile display 
     //---
     return {
         name,
