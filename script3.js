@@ -26,13 +26,9 @@ function localStorageSaveForm(form) {
         let language
         language = form.querySelectorAll('fieldset div input[type="checkbox"]:checked')
         language = [...language]
-        // language.filter(function (item, i) {
-        //     if (item.checked) {
-        //         return i
-        //     }
-        // })
-
-        console.log(language)
+        language = language.map(function(item){
+            return item.value
+        })
 
         localStorage.setItem('data', JSON.stringify({
             name: form.name.value,
@@ -42,12 +38,7 @@ function localStorageSaveForm(form) {
             email: form.email.value,
             skill: form.skill.value,
             group: form.group.value,
-
             language: language,
-            // language: form.querySelectorAll('fieldset div [type="checkbox"]').map(function (element) {
-            //     console.log(element)
-            //     return element
-            // })
         }))
     })
 }
@@ -63,36 +54,16 @@ function localStorageLoadForm(form) {
         form.skill.value = save.skill
         form.group.value = save.group
 
-        console.log(save.language)
-
         let languageNode = form.querySelectorAll('fieldset div input[type="checkbox"]')
         let languageArr = [...languageNode]
 
         languageArr.forEach(function (itemA, i) {
             save.language.forEach(function (itemB) {
-                if (itemA == itemB) {
+                if (itemA.value == itemB) {
                     languageNode[i].checked = true
                 }
             })
         })
-
-        // form.language.value = save.language
-        // if (save.language.length > 0) {
-        //     console.log('language load')
-
-
-
-        //     save.language.forEach(function (item) {
-
-
-        //         // console.log(item)
-        //         // console.log(toString(item))
-        //         form.language[0].checked = true
-
-        //     })
-
-
-        // }
     }
 }
 
@@ -126,6 +97,8 @@ function init() {
         createStudent(getData(form), listParent)
 
         localStorage.clear()
+        form.reset()
+        update()
     })
 
     update()
