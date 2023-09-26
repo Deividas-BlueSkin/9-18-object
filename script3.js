@@ -23,13 +23,16 @@ function localStorageSaveForm(form) {
     form.addEventListener('change', function () {
         // localStorage.setItem('data',JSON.stringify(getData(form)))
 
-        // language = []
-        // language.push(form.querySelectorAll('fieldset div input[type="checkbox"]'))
-        // language.map(function(item){
-        //     item.checked
+        let language
+        language = form.querySelectorAll('fieldset div input[type="checkbox"]:checked')
+        language = [...language]
+        // language.filter(function (item, i) {
+        //     if (item.checked) {
+        //         return i
+        //     }
         // })
-        
-        // console.log(language)
+
+        console.log(language)
 
         localStorage.setItem('data', JSON.stringify({
             name: form.name.value,
@@ -39,8 +42,8 @@ function localStorageSaveForm(form) {
             email: form.email.value,
             skill: form.skill.value,
             group: form.group.value,
-            // language: form.language.value,
-            // language: language,
+
+            language: language,
             // language: form.querySelectorAll('fieldset div [type="checkbox"]').map(function (element) {
             //     console.log(element)
             //     return element
@@ -59,6 +62,20 @@ function localStorageLoadForm(form) {
         form.email.value = save.email
         form.skill.value = save.skill
         form.group.value = save.group
+
+        console.log(save.language)
+
+        let languageNode = form.querySelectorAll('fieldset div input[type="checkbox"]')
+        let languageArr = [...languageNode]
+
+        languageArr.forEach(function (itemA, i) {
+            save.language.forEach(function (itemB) {
+                if (itemA == itemB) {
+                    languageNode[i].checked = true
+                }
+            })
+        })
+
         // form.language.value = save.language
         // if (save.language.length > 0) {
         //     console.log('language load')
