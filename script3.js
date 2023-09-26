@@ -18,6 +18,66 @@ function create(HTMLelement, first, parent, classes, id) {
     return element
 }
 
+console.log(localStorage)
+function localStorageSaveForm(form) {
+    form.addEventListener('change', function () {
+        // localStorage.setItem('data',JSON.stringify(getData(form)))
+
+        // language = []
+        // language.push(form.querySelectorAll('fieldset div input[type="checkbox"]'))
+        // language.map(function(item){
+        //     item.checked
+        // })
+        
+        // console.log(language)
+
+        localStorage.setItem('data', JSON.stringify({
+            name: form.name.value,
+            surname: form.surname.value,
+            age: form.age.value,
+            phone: form.phone.value,
+            email: form.email.value,
+            skill: form.skill.value,
+            group: form.group.value,
+            // language: form.language.value,
+            // language: language,
+            // language: form.querySelectorAll('fieldset div [type="checkbox"]').map(function (element) {
+            //     console.log(element)
+            //     return element
+            // })
+        }))
+    })
+}
+
+function localStorageLoadForm(form) {
+    let save = JSON.parse(localStorage.getItem('data'))
+    if (save != null) {
+        form.name.value = save.name
+        form.surname.value = save.surname
+        form.age.value = save.age
+        form.phone.value = save.phone
+        form.email.value = save.email
+        form.skill.value = save.skill
+        form.group.value = save.group
+        // form.language.value = save.language
+        // if (save.language.length > 0) {
+        //     console.log('language load')
+
+
+
+        //     save.language.forEach(function (item) {
+
+
+        //         // console.log(item)
+        //         // console.log(toString(item))
+        //         form.language[0].checked = true
+
+        //     })
+
+
+        // }
+    }
+}
 
 
 
@@ -39,10 +99,16 @@ function init() {
     // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-
 
     let form = document.querySelector('#contact_form')
+
+    localStorageLoadForm(form)
+    localStorageSaveForm(form)
+
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         createStudent(getData(form), listParent)
+
+        localStorage.clear()
     })
 
     update()
@@ -117,7 +183,7 @@ function getData(form) {
     let group = form.group.value
     //---
     let language = []
-    let count_checkbox = form.querySelectorAll('fieldset div [type="checkbox"]').length
+    let count_checkbox = form.querySelectorAll('fieldset div input[type="checkbox"]').length
     console.log(count_checkbox)
     for (let i = 1; i <= count_checkbox; i++) {
         if (document.querySelector(`#language_${i}`).checked) {
