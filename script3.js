@@ -18,7 +18,6 @@ function create(HTMLelement, first, parent, classes, id) {
     return element
 }
 
-console.log(localStorage)
 function localStorageSaveForm(form) {
     form.addEventListener('change', function () {
         // localStorage.setItem('data',JSON.stringify(getData(form)))
@@ -26,7 +25,7 @@ function localStorageSaveForm(form) {
         let language
         language = form.querySelectorAll('fieldset div input[type="checkbox"]:checked')
         language = [...language]
-        language = language.map(function(item){
+        language = language.map(function (item) {
             return item.value
         })
 
@@ -54,16 +53,19 @@ function localStorageLoadForm(form) {
         form.skill.value = save.skill
         form.group.value = save.group
 
-        let languageNode = form.querySelectorAll('fieldset div input[type="checkbox"]')
-        let languageArr = [...languageNode]
+        if (save.language) {
 
-        languageArr.forEach(function (itemA, i) {
-            save.language.forEach(function (itemB) {
-                if (itemA.value == itemB) {
-                    languageNode[i].checked = true
-                }
+            let languageNode = form.querySelectorAll('fieldset div input[type="checkbox"]')
+            let languageArr = [...languageNode]
+
+            languageArr.forEach(function (itemA, i) {
+                save.language.forEach(function (itemB) {
+                    if (itemA.value == itemB) {
+                        languageNode[i].checked = true
+                    }
+                })
             })
-        })
+        }
     }
 }
 
