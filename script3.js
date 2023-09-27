@@ -297,3 +297,12 @@ function preGenerate([
 function hide(length) {
     return '*'.repeat(length)
 }
+
+
+// Visi elementai, kurie sudeti i HTML'a yra tiesiog imesti i div'a kaip vienas string'as. 
+// Mums reiketu sukurti iprasta HTML struktura, kuri butu tokio tipo elementuose.
+
+// Atvaizduojant/parodant telefono numeri ir email'a, mes "perpiesiame" visa informacija 
+// apie studenta, nors mums reikia tik pakeisti zvaigzdutes i email'a ir 
+// kitas zvaigzdutes i telefono numeri. Tai butu gerai kad dar ir sita 
+// pataisytum, nes nera optimalu perpiesti viska del keletos raidziu/skaiciu.
