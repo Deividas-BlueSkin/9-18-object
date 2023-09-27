@@ -19,8 +19,10 @@ function create(HTMLelement, first, parent, classes, id) {
 }
 
 function localStorageSaveForm(form) {
-    form.addEventListener('change', function () {
+    form.addEventListener('change', function (event) {
         // localStorage.setItem('data',JSON.stringify(getData(form)))
+        let trigger = event.target.name
+        // console.log(trigger)
 
         let language
         language = form.querySelectorAll('fieldset div input[type="checkbox"]:checked')
@@ -69,20 +71,64 @@ function localStorageLoadForm(form) {
     }
 }
 
+//store student
+function localStorageStudentInit() {
+    if (localStorage.getItem('student_data') == null) {
+        localStorage.setItem('student_data', JSON.stringify([
+            ['gror', 'rrrffg', 5, 5555, 'yee@', 2, 'group_1', ['Js', 'Ph']],
+            ['bria', 'rrrrrffg', 6, 55544, 'yeee@', 3, 'group_2', ['Js', 'Pika']],
+            ['shillA', 'rrffffg', 7, 551115, 'yeeee@', 4, 'group_3', ['Js', 'C#']],
+            ['unoitr', 'rffffffffg', 8, 55145655, 'yeeeee@', 5, 'group_2', []],
+            ['vivvals', 'rffggggg', 20, 500055, 'yeeeeeee@', 6, 'group_1', ['Pika']],
+        ]))
+    }
+}
 
+function localStorageStudentLoad() {
+    return JSON.parse(localStorage.getItem('student_data'))
+}
 
+function localStorageStudentSave(student_data_array) {
+    localStorage.setItem('student_data', JSON.stringify(student_data_array))
+}
+
+function localStorageStudentAdd(data, student_data_array) {
+    // let student_data = JSON.parse(localStorage.getItem('student_data'))
+    student_data_array.push([data.name, data.surname, data.age, data.phone, data.email, data.group, data.language])
+}
+
+function localStorageStudentDelete(data) {
+    let array = [data.name, data.surname]
+    let student_data_array = localStorageStudentLoad()
+    student_data_array.forEach(function (item, i) {
+        if (item[0] == array[0] && item[1] == array[1]) {
+            // console.log('array splice')
+            
+            student_data_array.splice(i, 1)
+        }
+    })
+    localStorageStudentSave(student_data_array)
+}
+
+console.log(localStorage)
 function init() {
     const listParent = create('div', false, null, null, 'students_list')
 
     // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-
     // pre_Init
     // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-
+    localStorageStudentInit()
 
-    createStudent(preGenerate(['gror', 'rrrffg', 5, 5555, 'yee@', 2, 'group_1', ['Js', 'Ph']]), listParent)
-    createStudent(preGenerate(['bria', 'rrrrrffg', 6, 55544, 'yeee@', 3, 'group_2', ['Js', 'Pika']]), listParent)
-    createStudent(preGenerate(['shillA', 'rrffffg', 7, 551115, 'yeeee@', 4, 'group_3', ['Js', 'C#']]), listParent)
-    createStudent(preGenerate(['unoitr', 'rffffffffg', 8, 55145655, 'yeeeee@', 5, 'group_2', []]), listParent)
-    createStudent(preGenerate(['vivvals', 'rffggggg', 20, 500055, 'yeeeeeee@', 6, 'group_1', ['Pika']]), listParent)
+    let student_data_array = localStorageStudentLoad()
+    student_data_array.forEach(function (item) {
+        createStudent(preGenerate(item), listParent)
+    })
+
+    // createStudent(preGenerate(['gror', 'rrrffg', 5, 5555, 'yee@', 2, 'group_1', ['Js', 'Ph']]), listParent)
+    // createStudent(preGenerate(['bria', 'rrrrrffg', 6, 55544, 'yeee@', 3, 'group_2', ['Js', 'Pika']]), listParent)
+    // createStudent(preGenerate(['shillA', 'rrffffg', 7, 551115, 'yeeee@', 4, 'group_3', ['Js', 'C#']]), listParent)
+    // createStudent(preGenerate(['unoitr', 'rffffffffg', 8, 55145655, 'yeeeee@', 5, 'group_2', []]), listParent)
+    // createStudent(preGenerate(['vivvals', 'rffggggg', 20, 500055, 'yeeeeeee@', 6, 'group_1', ['Pika']]), listParent)
 
     // [<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-=-=-=-=-=-=-=-=-=-=>][<=-=-
     // 
@@ -96,11 +142,14 @@ function init() {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        createStudent(getData(form), listParent)
+        let data = getData(form)
+        createStudent(data, listParent)
+        localStorageStudentAdd(data, student_data_array)
 
         localStorage.clear()
         form.reset()
         update()
+        localStorageStudentSave(student_data_array)
     })
 
     update()
@@ -142,6 +191,8 @@ function createStudent(data, parent) {
     deleteButton.addEventListener('click', function () {
         item.remove()
         createTemp(parent, `Student deleted: ${data.name} ${data.surname} . `, `color: red`)
+
+        localStorageStudentDelete(data)
     })
 }
 
@@ -176,7 +227,7 @@ function getData(form) {
     //---
     let language = []
     let count_checkbox = form.querySelectorAll('fieldset div input[type="checkbox"]').length
-    console.log(count_checkbox)
+    // console.log(count_checkbox)
     for (let i = 1; i <= count_checkbox; i++) {
         if (document.querySelector(`#language_${i}`).checked) {
             language.push(document.querySelector(`#language_${i}`).value)
